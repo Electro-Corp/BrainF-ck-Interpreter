@@ -1,8 +1,12 @@
+/*
+  [BrainF*ck compiler]
+  Unoptimized, but its small.
+*/
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 int memory[60000];
 int current = 0;
-int inLoop = 0;
 char *code;
 int i = 0;
 void usage();
@@ -18,11 +22,9 @@ int main(int argv, char **args) {
   }
   // read file
   code = malloc(1000);
-
   while ((c = fgetc(fp)) != EOF) {
     code[n++] = (char)c;
   }
-  // printf("Got: %s\n", code);
   for (int g = 0; i < 1000; i++) {
     if (code[i])
       parseCode(code[i]);
@@ -49,7 +51,6 @@ void parseCode(char ch) {
     current--;
   }
   if (ch == '[') {
-    inLoop = 1;
     char *sus = malloc(1000);
     int h = i + 1;
     while (code[h++] != ']') {
