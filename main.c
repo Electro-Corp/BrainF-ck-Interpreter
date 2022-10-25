@@ -1,3 +1,7 @@
+/*
+  [BrainF*ck compiler]
+  Unoptimized, but its small. 
+*/
 #include <stdio.h>
 #include <stdlib.h>
 int memory[60000];
