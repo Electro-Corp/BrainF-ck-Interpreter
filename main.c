@@ -12,7 +12,7 @@ int i = 0;
 void usage();
 void parseCode(char code, int *memPx);
 int main(int argv, char **args) {
-  printf("The Lightweight Brainf*ck Interpter\n");
+  printf("The Lightweight Brainf*ck Interpeter\n");
   // get file
   FILE *fp = fopen(args[1], "r");
   int c;
@@ -39,6 +39,7 @@ void usage() {
   printf("==== LWBFI ====\n");
   printf("Usage: \n");
   printf("./lwbfi filename\n");
+  printf("===============\n");
   printf("File not found, or file not provided.\n");
 }
 int occ(char oc, char *loopVar) {

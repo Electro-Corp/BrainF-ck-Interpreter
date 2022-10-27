@@ -1,5 +1,5 @@
 # Small BrainF Compiler in C
-Supports all BrainF functions
+Supports all BrainF functions (working on fixing loops)
 
 <br>
 usage: <br>
