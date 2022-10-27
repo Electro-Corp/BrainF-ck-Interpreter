@@ -5,5 +5,8 @@ Supports all BrainF functions (working on fixing loops)
 usage: <br>
 
 ```bash
+# compile
+make
+# run
 ./lwbfi [FILENAME]
 ```
