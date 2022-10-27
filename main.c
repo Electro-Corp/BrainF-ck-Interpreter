@@ -10,8 +10,9 @@ int current = 0;
 char *code;
 int i = 0;
 void usage();
-void parseCode(char code);
+void parseCode(char code, int *memPx);
 int main(int argv, char **args) {
+  printf("The Lightweight Brainf*ck Interpter\n");
   // get file
   FILE *fp = fopen(args[1], "r");
   int c;
@@ -25,24 +26,36 @@ int main(int argv, char **args) {
   while ((c = fgetc(fp)) != EOF) {
     code[n++] = (char)c;
   }
-  for (int g = 0; i < 1000; i++) {
-    if (code[i])
-      parseCode(code[i]);
+  for (int g = 0; i < strlen(code); i++) {
+    if (code[i]) {
+      // printf("I IS: %d\n",i);
+      parseCode(code[i], memory);
+    }
   }
-  free(code);
+  printf("\n");
   return 0;
 }
 void usage() {
   printf("==== LWBFI ====\n");
   printf("Usage: \n");
   printf("./lwbfi filename\n");
+  printf("File not found, or file not provided.\n");
 }
-void parseCode(char ch) {
+int occ(char oc, char *loopVar) {
+  int u = 0;
+  for (int j = 0; j < strlen(loopVar); j++) {
+    if (loopVar[j] == oc) {
+      u++;
+    }
+  }
+  return u;
+}
+void parseCode(char ch, int *memPx) {
   if (ch == '+') {
-    memory[current]++;
+    memPx[current]++;
   }
   if (ch == '-') {
-    memory[current]--;
+    memPx[current]--;
   }
   if (ch == '>') {
     current++;
@@ -51,24 +64,42 @@ void parseCode(char ch) {
     current--;
   }
   if (ch == '[') {
-    char *sus = malloc(1000);
-    int h = i + 1;
-    while (code[h++] != ']') {
-      if (code[h])
-        sus[h - i] = code[h];
+    char *loopVar = malloc(strlen(code));
+    int h = 0;
+    while (1) {
+      if (i < strlen(code)) {
+        if (code[i++]) {
+          if (code[i] != ']') {
+            if ((occ('[', loopVar) == 0 && occ(']', loopVar) == 0) ||
+                (occ('[', loopVar) != occ(']', loopVar))) {
+              loopVar[h++] = code[i];
+            }
+          } else {
+            if (((occ('[', loopVar) != 0 && occ(']', loopVar) != 0) &&
+                (occ('[', loopVar) == occ(']', loopVar))) || occ('[',loopVar) == 0)
+              break;
+            else {
+              loopVar[h++] = code[i];
+            }
+          }
+        }
+      } else {
+        break;
+      }
     }
-    while (memory[current] < 0) {
-      if (h < strlen(sus))
-        parseCode((char)sus[h++]);
-      else
-        h = 0;
+    h = 0;
+    while (memPx[current] > 0) {
+        if (h + 1 <= strlen(loopVar)) {
+          parseCode(loopVar[h++], memPx);
+        } else
+          h = 0;
+      
     }
-    i += strlen(sus);
   }
   if (ch == '.') {
-    putchar(memory[current]);
+    putchar(memPx[current]);
   }
   if (ch == ',') {
-    memory[current] = (int)getchar();
+    memPx[current] = (int)getchar();
   }
 }

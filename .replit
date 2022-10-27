@@ -1,5 +1,5 @@
 compile = ["make", "-s"]
-run = "./lwbfi test.bf"
+run = "./lwbfi oh.bf"
 entrypoint = "main.c"
 hidden = ["main", "main-debug", "**/*.o", "**/*.d", ".ccls-cache", "Makefile"]
 
@@ -41,7 +41,7 @@ type = "request"
 
 [debugger.interactive.launchMessage.arguments]
 MIMode = "gdb"
-arg = []
+arg = ["oh.bf"]
 cwd = "."
 environment = []
 externalConsole = false
