@@ -1,4 +1,4 @@
-# Small BrainF Compiler in C
+# Small BrainF Interpeter in C
 Supports all BrainF functions (working on fixing loops)
 
 <br>
